@@ -2,12 +2,12 @@
 {
     internal class Cell
     {
-        private bool _isAlive;
+        private bool isAlive;
 
         public bool IsAlive
         {
-            get => _isAlive;
-            set => _isAlive = value;
+            get => isAlive;
+            set => isAlive = value;
         }
     }
 }
