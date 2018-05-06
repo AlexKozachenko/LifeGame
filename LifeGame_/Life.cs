@@ -163,12 +163,12 @@ namespace LifeGame
 
         private void ManualInput()
         {
-            PrintField(' ');
             int x = 1;
             int y = 2;
             ConsoleKeyInfo input;
             do
             {
+                PrintField('X');
                 Console.SetCursorPosition(x, y);
                 input = Console.ReadKey();
                 if (input.Key == ConsoleKey.UpArrow)
@@ -214,7 +214,6 @@ namespace LifeGame
                         field[y - 1, x].IsAlive = true;
                     }
                 }
-                PrintField('X');
             } while (input.Key != ConsoleKey.Spacebar);
         }
 
