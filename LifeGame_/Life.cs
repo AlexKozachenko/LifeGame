@@ -285,9 +285,3 @@ namespace LifeGame
         }
     }
 }
-
-
-
-
-
-
