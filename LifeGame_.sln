@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifeGame_", "LifeGame_\LifeGame_.csproj", "{A5B37D12-EB14-4B7D-9F18-23FA104C7998}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifeGame", "LifeGame_\LifeGame.csproj", "{A5B37D12-EB14-4B7D-9F18-23FA104C7998}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,10 +4,9 @@ using System.Threading;
 
 namespace LifeGame
 {
-
     internal class Life
     {
-        private const int fieldHeight = 12;
+        private const int fieldHeight = 12 ;
         private const int fieldWidth = 42;
         private const int speed = 300;
         private static int equalGenerationNumber = 0;
@@ -21,13 +20,13 @@ namespace LifeGame
             bool isEqual = true;
             for (uint i = 0; i < fieldHeight; i++)
             {
+                for (uint j = 0; j < fieldWidth; j++)
                 {
-                    for (uint j = 0; j < fieldWidth; j++)
-                        if (field1[i, j].IsAlive != field2[i, j].IsAlive)
-                        {
-                            isEqual = false;
-                            break;
-                        }
+                    if (field1[i, j].IsAlive != field2[i, j].IsAlive)
+                    {
+                        isEqual = false;
+                        break;
+                    }
                 }
             }
             return isEqual;
@@ -78,7 +77,7 @@ namespace LifeGame
                 {
                     continue;
                 }
-                if (neighborCells[i, xBuffer] >= fieldWidth - 1 || neighborCells[i, yBuffer] >= fieldHeight - 1)
+                if (neighborCells[i, xBuffer] > fieldWidth - 1 || neighborCells[i, yBuffer] > fieldHeight - 1)
                 {
                     continue;
                 }
@@ -104,18 +103,10 @@ namespace LifeGame
                 NextGeneration();
                 isEqual = IsEqual();
                 liveCells = GetLiveCells(field);
-                if (isEqual)
-                {
-                    Console.WriteLine("Current generation ({0}) is same as earlier ({1}).", generationCounter, equalGenerationNumber);
-                }
-                if (liveCells == 0)
-                {
-                    Console.WriteLine("All cells are dead.");
-                }
+                Console.SetCursorPosition(0, fieldHeight + 1);
                 PrintField('O');
             } while (liveCells != 0 && !isEqual);
-            Console.SetCursorPosition(0, fieldHeight + 3);
-        }
+        }       
 
         private int GetLiveCells(Cell[,] field)
         {
@@ -165,56 +156,54 @@ namespace LifeGame
         {
             int x = 1;
             int y = 2;
-            ConsoleKeyInfo input;
+            ConsoleKey input;
             do
             {
                 PrintField('X');
                 Console.SetCursorPosition(x, y);
-                input = Console.ReadKey();
-                if (input.Key == ConsoleKey.UpArrow)
+                input = Console.ReadKey().Key;
+                switch (input)
                 {
-                    y--;
-                    if (y < 2)
-                    {
-                        y = 2;
-                    }
+                    case ConsoleKey.UpArrow:
+                        y--;
+                        if (y < 2)
+                        {
+                            y = 2;
+                        }
+                        break;
+                    case ConsoleKey.DownArrow:
+                        y++;
+                        if (y > fieldHeight - 1)
+                        {
+                            y = fieldHeight - 1;
+                        }
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        x--;
+                        if (x < 1)
+                        {
+                            x = 1;
+                        }
+                        break;
+                    case ConsoleKey.RightArrow:
+                        x++;
+                        if (x > fieldWidth - 2)
+                        {
+                            x = fieldWidth - 2;
+                        }
+                        break;
+                    case ConsoleKey.Enter:
+                       if(field[y - 1, x].IsAlive)
+                        {
+                            field[y - 1, x].IsAlive = false;
+                        }
+                        else
+                        {
+                            field[y - 1, x].IsAlive = true;
+                        }
+                        break;
                 }
-                if (input.Key == ConsoleKey.DownArrow)
-                {
-                    y++;
-                    if (y > fieldHeight - 1)
-                    {
-                        y = fieldHeight - 1;
-                    }
-                }
-                if (input.Key == ConsoleKey.LeftArrow)
-                {
-                    x--;
-                    if (x < 1)
-                    {
-                        x = 1;
-                    }
-                }
-                if (input.Key == ConsoleKey.RightArrow)
-                {
-                    x++;
-                    if (x > fieldWidth - 2)
-                    {
-                        x = fieldWidth - 2;
-                    }
-                }
-                if (input.Key == ConsoleKey.Enter && field[y - 1, x].IsAlive)
-                {
-                    field[y - 1, x].IsAlive = false;
-                }
-                else
-                {
-                    if (input.Key == ConsoleKey.Enter && !field[y - 1, x].IsAlive)
-                    {
-                        field[y - 1, x].IsAlive = true;
-                    }
-                }
-            } while (input.Key != ConsoleKey.Spacebar);
+            } while (input != ConsoleKey.Spacebar);
         }
 
         private void NextGeneration()
@@ -272,7 +261,7 @@ namespace LifeGame
                             if (cell == 'X')
                                 Console.ForegroundColor = ConsoleColor.Red;
                             if (cell == 'O')
-                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.ForegroundColor = ConsoleColor.DarkGreen;
                             Console.Write(cell);
                             Console.ResetColor();
                         }
