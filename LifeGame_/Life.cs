@@ -9,18 +9,17 @@ namespace LifeGame
         private const int fieldHeight = 12 ;
         private const int fieldWidth = 42;
         private const int speed = 300;
-        private static int equalGenerationNumber = 0;
         private static int generationCounter = 0;
         private Cell[,] field = new Cell[fieldHeight, fieldWidth];
-        private Dictionary<Cell[,], int> history = new Dictionary<Cell[,], int>();
+        private List<Cell[,]> history = new List<Cell[,]>();
         private Cell[,] previousField = new Cell[fieldHeight, fieldWidth];
 
         public static bool CompareFields(Cell[,] field1, Cell[,] field2)
         { 
             bool isEqual = true;
-            for (uint i = 0; i < fieldHeight; i++)
+            for (int i = 0; i < fieldHeight; i++)
             {
-                for (uint j = 0; j < fieldWidth; j++)
+                for (int j = 0; j < fieldWidth; j++)
                 {
                     if (field1[i, j].IsAlive != field2[i, j].IsAlive)
                     {
@@ -43,23 +42,23 @@ namespace LifeGame
             }
         }
 
-        private uint CountLiveNeighborCells(uint y, uint x)
+        private int CountLiveNeighborCells(int y, int x)
         {
             // число измерений игрового пространства - 2
-            const uint dimensions = 2;
-            const uint maxCountOfNeighborCells = 8;
+            const int dimensions = 2;
+            const int maxCountOfNeighborCells = 8;
             // создаем двумерный массив для хранения координат соседних ячеек
             // абсциссы хранятся в строке 0
-            const uint xBuffer = 0;
+            const int xBuffer = 0;
             // ординаты хранятся в строке 1
-            const uint yBuffer = 1;
-            uint coordinate = 0;
-            uint liveNeighborCells = 0;
+            const int yBuffer = 1;
+            int coordinate = 0;
+            int liveNeighborCells = 0;
             // двумерный массив для хранения координат соседних ячеек
-            uint[,] neighborCells = new uint[maxCountOfNeighborCells, dimensions];
-            for (uint i = y - 1; i <= y + 1; i++)
+            int[,] neighborCells = new int[maxCountOfNeighborCells, dimensions];
+            for (int i = y - 1; i <= y + 1; i++)
             {
-                for (uint j = x - 1; j <= x + 1; j++)
+                for (int j = x - 1; j <= x + 1; j++)
                 {
                     if (i == y && j == x)
                     {
@@ -70,9 +69,8 @@ namespace LifeGame
                     coordinate++;
                 }
             }
-            for (uint i = 0; i < maxCountOfNeighborCells; i++)
+            for (int i = 0; i < maxCountOfNeighborCells; i++)
             {
-
                 if (neighborCells[i, xBuffer] < 1 || neighborCells[i, yBuffer] < 1)
                 {
                     continue;
@@ -111,9 +109,9 @@ namespace LifeGame
         private int GetLiveCells(Cell[,] field)
         {
             int liveCells = 0;
-            for (uint i = 0; i < fieldHeight; i++)
+            for (int i = 0; i < fieldHeight; i++)
             {
-                for (uint j = 0; j < fieldWidth; j++)
+                for (int j = 0; j < fieldWidth; j++)
                 {
                     if (field[i, j].IsAlive)
                     {
@@ -126,9 +124,9 @@ namespace LifeGame
 
         private void Initialize(Cell[,] field)
         {
-            for (uint i = 0; i < fieldHeight; i++)
+            for (int i = 0; i < fieldHeight; i++)
             {
-                for (uint j = 0; j < fieldWidth; j++)
+                for (int j = 0; j < fieldWidth; j++)
                 {
                     field[i, j] = new Cell()
                     {
@@ -141,11 +139,10 @@ namespace LifeGame
         private bool IsEqual()
         {
             bool isEqual = false;
-            foreach (KeyValuePair<Cell[,], int> member in history)
+            foreach (Cell[,] member in history)
             {
-                if (CompareFields(member.Key, field))
+                if (CompareFields(member, field))
                 {
-                    equalGenerationNumber = member.Value;
                     isEqual = true;
                 }
             }
@@ -208,11 +205,11 @@ namespace LifeGame
 
         private void NextGeneration()
         {
-            for (uint i = 1; i < fieldHeight - 1; i++)
+            for (int i = 1; i < fieldHeight - 1; i++)
             {
-                for (uint j = 1; j < fieldWidth - 1; j++)
+                for (int j = 1; j < fieldWidth - 1; j++)
                 {
-                    uint liveNeighbors = CountLiveNeighborCells(i, j);
+                    int liveNeighbors = CountLiveNeighborCells(i, j);
                     if (!previousField[i, j].IsAlive)
                     {
                         if (liveNeighbors == 3)
@@ -233,11 +230,11 @@ namespace LifeGame
             Cell[,] temp = new Cell[fieldHeight, fieldWidth];
             Initialize(temp);
             CopyField(previousField, temp);
-            history.Add(temp, generationCounter);
+            history.Add(temp);
             generationCounter++;
         }
 
-        private void PrintField(Char cell)
+        private void PrintField(char cell)
         {
             Console.SetCursorPosition(0, 0);
             Console.WriteLine("Generation: ");
@@ -250,7 +247,7 @@ namespace LifeGame
                 for (int j = 0; j < fieldWidth; j++)
                 {
                     if (i == 0 || j == 0 || j == fieldWidth - 1 || i == fieldHeight - 1)
-                    {
+                    { 
                         Console.Write('+');
                     }
                     else
