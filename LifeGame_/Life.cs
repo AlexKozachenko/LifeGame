@@ -259,9 +259,13 @@ namespace LifeGame
                         {
                             Console.SetCursorPosition(j, i + 1);
                             if (cell == 'X')
+                            {
                                 Console.ForegroundColor = ConsoleColor.Red;
+                            }
                             if (cell == 'O')
+                            {
                                 Console.ForegroundColor = ConsoleColor.DarkGreen;
+                            }
                             Console.Write(cell);
                             Console.ResetColor();
                         }
