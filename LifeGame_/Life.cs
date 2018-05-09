@@ -148,15 +148,18 @@ namespace LifeGame
 
         private void ManualInput()
         {
-            int x = 1;
+            // координаты начальной точки (верхний левый угол поля) с учетом счетчика поколений и рамки
             int y = 2;
+            int x = 1;
             ConsoleKey input;
             do
             {
+                Console.CursorVisible = false; ;
+                const char accentuationLetter = 'X';
                 PrintField();
                 Console.SetCursorPosition(x, y);
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write('X');
+                Console.Write(accentuationLetter);
                 Console.ResetColor();
                 Console.SetCursorPosition(x, y);
                 input = Console.ReadKey().Key;
@@ -164,35 +167,37 @@ namespace LifeGame
                 {
                     case ConsoleKey.UpArrow:
                         y--;
-                        if (y < 2)
+                        // если ордината заходит на верхнюю границу рамки, смещаем под нее (0 - счетчик, 1 - рамка, 2 - начальная ордината)
+                        if (y == 1)
                         {
                             y = 2;
                         }
-                        
                         break;
                     case ConsoleKey.DownArrow:
                         y++;
+                        // если ордината заходит на нижнюю границу, устанавливаем над ней
                         if (y > fieldHeight - 1)
                         {
                             y = fieldHeight - 1;
                         }
-                       
                         break;
                     case ConsoleKey.LeftArrow:
                         x--;
-                        if (x < 1)
+                        // если абсцисса заходит на левую границу рамки, смещаем на 1 вправо (0 - рамка, 1 - начальная абсцисса)
+                        if (x == 0)
                         {
                             x = 1;
                         }
-                        
                         break;
                     case ConsoleKey.RightArrow:
                         x++;
+                        // если абсцисса заходит на правую границу рамки, смещаем на 2 влево, чтобы установить левее границы;
+                        // отнимется 2, т.к. fieldWidth это количество клеток по ширине, но нумерация начинается с нуля,
+                        // соответственно правая граница рамки это fieldWidth - 1, соотв. крайняя абсцисса - fieldWidth - 2
                         if (x > fieldWidth - 2)
                         {
                             x = fieldWidth - 2;
                         }
-                       
                         break;
                     case ConsoleKey.Enter:
                         if (field[y - 1, x].IsAlive)
@@ -217,6 +222,7 @@ namespace LifeGame
                     int liveNeighbors = CountLiveNeighborCells(i, j);
                     if (!previousField[i, j].IsAlive)
                     {
+                        // согласно условию задания, жизнь зарождается, если вокруг текущей клетки 3 живых
                         if (liveNeighbors == 3)
                         {
                             field[i, j].IsAlive = true;
@@ -224,6 +230,7 @@ namespace LifeGame
                     }
                     else
                     {
+                        // согласно условию задания, жизнь в клетке умирает, если вокруг текущей клетки менее 2 или более 3-х живых
                         if (liveNeighbors < 2 || liveNeighbors > 3)
                         {
                             field[i, j].IsAlive = false;
