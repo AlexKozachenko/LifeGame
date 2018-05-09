@@ -2,7 +2,7 @@
 {
     internal class Cell
     {
-        private bool isAlive;
+        private bool isAlive = false;
 
         public bool IsAlive
         {
@@ -11,5 +11,8 @@
         }
     }
 }
+
+
+
 
 

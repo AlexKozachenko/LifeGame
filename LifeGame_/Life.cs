@@ -102,7 +102,7 @@ namespace LifeGame
                 isEqual = IsEqual();
                 liveCells = GetLiveCells(field);
                 Console.SetCursorPosition(0, fieldHeight + 1);
-                PrintField('O');
+                PrintField();
             } while (liveCells != 0 && !isEqual);
         }       
 
@@ -128,10 +128,7 @@ namespace LifeGame
             {
                 for (int j = 0; j < fieldWidth; j++)
                 {
-                    field[i, j] = new Cell()
-                    {
-                        IsAlive = false
-                    };
+                    field[i, j] = new Cell();
                 }
             }
         }
@@ -156,7 +153,11 @@ namespace LifeGame
             ConsoleKey input;
             do
             {
-                PrintField('X');
+                PrintField();
+                Console.SetCursorPosition(x, y);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write('X');
+                Console.ResetColor();
                 Console.SetCursorPosition(x, y);
                 input = Console.ReadKey().Key;
                 switch (input)
@@ -167,6 +168,7 @@ namespace LifeGame
                         {
                             y = 2;
                         }
+                        
                         break;
                     case ConsoleKey.DownArrow:
                         y++;
@@ -174,6 +176,7 @@ namespace LifeGame
                         {
                             y = fieldHeight - 1;
                         }
+                       
                         break;
                     case ConsoleKey.LeftArrow:
                         x--;
@@ -181,6 +184,7 @@ namespace LifeGame
                         {
                             x = 1;
                         }
+                        
                         break;
                     case ConsoleKey.RightArrow:
                         x++;
@@ -188,9 +192,10 @@ namespace LifeGame
                         {
                             x = fieldWidth - 2;
                         }
+                       
                         break;
                     case ConsoleKey.Enter:
-                       if(field[y - 1, x].IsAlive)
+                        if (field[y - 1, x].IsAlive)
                         {
                             field[y - 1, x].IsAlive = false;
                         }
@@ -234,8 +239,11 @@ namespace LifeGame
             generationCounter++;
         }
 
-        private void PrintField(char cell)
+        private void PrintField()
         {
+            const char cellLetter = 'O';
+            const char emptyCell = ' ';
+            const char frameElement = '+';
             Console.SetCursorPosition(0, 0);
             Console.WriteLine("Generation: ");
             Console.SetCursorPosition("Generation: ".Length, 0);
@@ -248,27 +256,20 @@ namespace LifeGame
                 {
                     if (i == 0 || j == 0 || j == fieldWidth - 1 || i == fieldHeight - 1)
                     { 
-                        Console.Write('+');
+                        Console.Write(frameElement);
                     }
                     else
                     {
                         if (field[i, j].IsAlive)
                         {
                             Console.SetCursorPosition(j, i + 1);
-                            if (cell == 'X')
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                            }
-                            if (cell == 'O')
-                            {
-                                Console.ForegroundColor = ConsoleColor.DarkGreen;
-                            }
-                            Console.Write(cell);
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.Write(cellLetter);
                             Console.ResetColor();
                         }
                         else
                         {
-                            Console.Write(' ');
+                            Console.Write(emptyCell);
                         }
                     }
                 }
