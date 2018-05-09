@@ -16,7 +16,7 @@ namespace LifeGame
         private Cell[,] previousField = new Cell[fieldHeight, fieldWidth];
 
         public static bool CompareFields(Cell[,] field1, Cell[,] field2)
-        {
+        { 
             bool isEqual = true;
             for (uint i = 0; i < fieldHeight; i++)
             {
