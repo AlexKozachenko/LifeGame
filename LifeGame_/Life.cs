@@ -43,8 +43,7 @@ namespace LifeGame
         }
 
         private int CountLiveNeighborCells(int y, int x)
-        {
-            // число измерений игрового пространства - 2
+        {   // число измерений игрового пространства - 2
             const int dimensions = 2;
             const int maxCountOfNeighborCells = 8;
             // создаем двумерный массив для хранения координат соседних ячеек
@@ -147,8 +146,7 @@ namespace LifeGame
         }
 
         private void ManualInput()
-        {
-            // координаты начальной точки (верхний левый угол поля) с учетом счетчика поколений и рамки
+        {   // координаты начальной точки (верхний левый угол поля) с учетом счетчика поколений и рамки
             int y = 2;
             int x = 1;
             ConsoleKey input;
@@ -221,16 +219,14 @@ namespace LifeGame
                 {
                     int liveNeighbors = CountLiveNeighborCells(i, j);
                     if (!previousField[i, j].IsAlive)
-                    {
-                        // согласно условию задания, жизнь зарождается, если вокруг текущей клетки 3 живых
+                    {   // согласно условию задания, жизнь зарождается, если вокруг текущей клетки 3 живых
                         if (liveNeighbors == 3)
                         {
                             field[i, j].IsAlive = true;
                         }
                     }
                     else
-                    {
-                        // согласно условию задания, жизнь в клетке умирает, если вокруг текущей клетки менее 2 или более 3-х живых
+                    {   // согласно условию задания, жизнь в клетке умирает, если вокруг текущей клетки менее 2 или более 3-х живых
                         if (liveNeighbors < 2 || liveNeighbors > 3)
                         {
                             field[i, j].IsAlive = false;
