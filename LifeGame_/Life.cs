@@ -6,12 +6,18 @@ namespace LifeGame
 {
     internal class Life
     {
-        private const int fieldHeight = 12 ;
-        private const int fieldWidth = 42;
+        public const int fieldHeight = 12 ;
+
+        public const int fieldWidth = 42;
+
         private const int speed = 300;
+
         private static int generationCounter = 0;
+
         private Cell[,] field = new Cell[fieldHeight, fieldWidth];
+
         private List<Cell[,]> history = new List<Cell[,]>();
+
         private Cell[,] previousField = new Cell[fieldHeight, fieldWidth];
 
         public static bool CompareFields(Cell[,] field1, Cell[,] field2)
@@ -152,7 +158,7 @@ namespace LifeGame
             ConsoleKey input;
             do
             {
-                Console.CursorVisible = false; ;
+                Console.CursorVisible = false; 
                 const char accentuationLetter = 'X';
                 PrintField();
                 Console.SetCursorPosition(x, y);
