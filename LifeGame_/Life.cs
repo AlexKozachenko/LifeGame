@@ -5,21 +5,24 @@ using System.Threading;
 namespace LifeGame
 {
     internal class Life
-    {
-        public const int fieldHeight = 12 ;
+    {   // значения констант: длина и ширина поля из задания + 2 за счет рамки
+        protected const int fieldHeight = 12 ;
 
-        public const int fieldWidth = 42;
+        protected const int fieldWidth = 42;
 
         private const int speed = 300;
+        // координаты начальной точки (верхний левый угол поля) с учетом счетчика поколений и рамки
+        protected static int cellOrdinateY = 2;
+
+        protected static int cellAbscissaX = 1;
+
+        protected static Cell[,] field = new Cell[fieldHeight, fieldWidth];
 
         private static int generationCounter = 0;
 
-        private Cell[,] field = new Cell[fieldHeight, fieldWidth];
+        private static List<Cell[,]> history = new List<Cell[,]>();
 
-        private List<Cell[,]> history = new List<Cell[,]>();
-
-        private Cell[,] previousField = new Cell[fieldHeight, fieldWidth];
-
+        private static Cell[,] previousField = new Cell[fieldHeight, fieldWidth];
         public static bool CompareFields(Cell[,] field1, Cell[,] field2)
         { 
             bool isEqual = true;
@@ -94,6 +97,7 @@ namespace LifeGame
 
         public void Game()
         {
+            Console.CursorVisible = false;
             Initialize(field);
             Initialize(previousField);
             ManualInput();
@@ -152,69 +156,22 @@ namespace LifeGame
         }
 
         private void ManualInput()
-        {   // координаты начальной точки (верхний левый угол поля) с учетом счетчика поколений и рамки
-            int y = 2;
-            int x = 1;
+        {   
             ConsoleKey input;
+            ICommand useKey;
             do
             {
-                Console.CursorVisible = false; 
                 const char accentuationLetter = 'X';
                 PrintField();
-                Console.SetCursorPosition(x, y);
+                Console.SetCursorPosition(cellAbscissaX, cellOrdinateY);
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write(accentuationLetter);
                 Console.ResetColor();
-                Console.SetCursorPosition(x, y);
+                Console.SetCursorPosition(cellAbscissaX, cellOrdinateY);
                 input = Console.ReadKey().Key;
-                switch (input)
-                {
-                    case ConsoleKey.UpArrow:
-                        y--;
-                        // если ордината заходит на верхнюю границу рамки, смещаем под нее (0 - счетчик, 1 - рамка, 2 - начальная ордината)
-                        if (y == 1)
-                        {
-                            y = 2;
-                        }
-                        break;
-                    case ConsoleKey.DownArrow:
-                        y++;
-                        // если ордината заходит на нижнюю границу, устанавливаем над ней
-                        if (y > fieldHeight - 1)
-                        {
-                            y = fieldHeight - 1;
-                        }
-                        break;
-                    case ConsoleKey.LeftArrow:
-                        x--;
-                        // если абсцисса заходит на левую границу рамки, смещаем на 1 вправо (0 - рамка, 1 - начальная абсцисса)
-                        if (x == 0)
-                        {
-                            x = 1;
-                        }
-                        break;
-                    case ConsoleKey.RightArrow:
-                        x++;
-                        // если абсцисса заходит на правую границу рамки, смещаем на 2 влево, чтобы установить левее границы;
-                        // отнимется 2, т.к. fieldWidth это количество клеток по ширине, но нумерация начинается с нуля,
-                        // соответственно правая граница рамки это fieldWidth - 1, соотв. крайняя абсцисса - fieldWidth - 2
-                        if (x > fieldWidth - 2)
-                        {
-                            x = fieldWidth - 2;
-                        }
-                        break;
-                    case ConsoleKey.Enter:
-                        if (field[y - 1, x].IsAlive)
-                        {
-                            field[y - 1, x].IsAlive = false;
-                        }
-                        else
-                        {
-                            field[y - 1, x].IsAlive = true;
-                        }
-                        break;
-                }
-            } while (input != ConsoleKey.Spacebar);
+                useKey = new Action(input);
+                useKey.Execute();
+            } while (Action.Exit);
         }
 
         private void NextGeneration()
@@ -257,7 +214,8 @@ namespace LifeGame
             Console.WriteLine("Generation: ");
             Console.SetCursorPosition("Generation: ".Length, 0);
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine(generationCounter);
+            Console.Write(generationCounter);
+            Console.Write('\n');
             Console.ResetColor();
             for (int i = 0; i < fieldHeight; i++)
             {
