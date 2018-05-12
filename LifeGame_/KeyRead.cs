@@ -3,12 +3,11 @@ using System.Collections.Generic;
 
 namespace LifeGame
 {
-    internal class Action : ICommand
+    internal class KeyRead : ICommand
     {
         private static bool exit;
 
         private ConsoleKey input;
-
         private Dictionary<ConsoleKey, IKey> keys = new Dictionary<ConsoleKey, IKey>();
 
         public static bool Exit
@@ -16,7 +15,7 @@ namespace LifeGame
             get => exit;
             set => exit = value;
         }
-        public Action(ConsoleKey input)
+        public KeyRead(ConsoleKey input)
         {
             exit = false;
             this.input = input;

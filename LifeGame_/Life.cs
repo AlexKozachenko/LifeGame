@@ -54,7 +54,7 @@ namespace LifeGame
             const int xBuffer = 0;
             // ординаты хранятся в строке 1
             const int yBuffer = 1;
-            int coordinate = 0;
+            int neighborCellIndex = 0;
             int liveNeighborCells = 0;
             // двумерный массив для хранения координат соседних ячеек
             int[,] neighborCells = new int[maxCountOfNeighborCells, dimensions];
@@ -66,9 +66,9 @@ namespace LifeGame
                     {
                         continue;
                     }
-                    neighborCells[coordinate, yBuffer] = i;
-                    neighborCells[coordinate, xBuffer] = j;
-                    coordinate++;
+                    neighborCells[neighborCellIndex, yBuffer] = i;
+                    neighborCells[neighborCellIndex, xBuffer] = j;
+                    neighborCellIndex++;
                 }
             }
             for (int i = 0; i < maxCountOfNeighborCells; i++)
@@ -150,8 +150,6 @@ namespace LifeGame
 
         private void ManualInput()
         {   
-            ConsoleKey input;
-            ICommand useKey;
             do
             {
                 const char accentuationLetter = 'X';
@@ -161,10 +159,9 @@ namespace LifeGame
                 Console.Write(accentuationLetter);
                 Console.ResetColor();
                 Console.SetCursorPosition(cellAbscissaX, cellOrdinateY);
-                input = Console.ReadKey().Key;
-                useKey = new Action(input);
+                ICommand useKey = new KeyRead(Console.ReadKey().Key);
                 useKey.Execute();
-            } while (Action.Exit);
+            } while (KeyRead.Exit);
         }
 
         private void NextGeneration()
