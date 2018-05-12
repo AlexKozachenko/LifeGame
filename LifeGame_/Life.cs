@@ -7,22 +7,16 @@ namespace LifeGame
     internal class Life
     {   // значения констант: длина и ширина поля из задания + 2 за счет рамки
         protected const int fieldHeight = 12 ;
-
         protected const int fieldWidth = 42;
-
         private const int speed = 300;
         // координаты начальной точки (верхний левый угол поля) с учетом счетчика поколений и рамки
-        protected static int cellOrdinateY = 2;
-
         protected static int cellAbscissaX = 1;
-
+        protected static int cellOrdinateY = 2;
         protected static Cell[,] field = new Cell[fieldHeight, fieldWidth];
-
         private static int generationCounter = 0;
-
         private static List<Cell[,]> history = new List<Cell[,]>();
-
         private static Cell[,] previousField = new Cell[fieldHeight, fieldWidth];
+
         public static bool CompareFields(Cell[,] field1, Cell[,] field2)
         { 
             bool isEqual = true;
@@ -110,7 +104,6 @@ namespace LifeGame
                 NextGeneration();
                 isEqual = IsEqual();
                 liveCells = GetLiveCells(field);
-                Console.SetCursorPosition(0, fieldHeight + 1);
                 PrintField();
             } while (liveCells != 0 && !isEqual);
         }       
