@@ -1,7 +1,14 @@
-﻿namespace LifeGame
+﻿using System;
+
+namespace LifeGame
 {
     internal class MoveUp : Life, IKey
     {
+        private const ConsoleKey input = ConsoleKey.UpArrow;
+        public ConsoleKey Input
+        {
+            get => input;
+        }
         public bool Action()
         {
             cellOrdinateY--;

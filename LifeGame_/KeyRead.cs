@@ -5,39 +5,39 @@ namespace LifeGame
 {
     internal class KeyRead : ICommand
     {
-        private static bool exit;
+        private static bool exit = true;
 
         private ConsoleKey input;
-        private Dictionary<ConsoleKey, IKey> keys = new Dictionary<ConsoleKey, IKey>();
+        private List<IKey> keys = new List<IKey>();
+
+        public KeyRead(ConsoleKey input)
+        {
+            this.input = input;
+            keys.Add(new MoveLeft());
+            keys.Add(new MoveRight());
+            keys.Add(new MoveUp());
+            keys.Add(new MoveDown());
+            keys.Add(new CellState());
+            keys.Add(new ExitInput());
+        }
 
         public static bool Exit
         {
             get => exit;
-            set => exit = value;
         }
-        public KeyRead(ConsoleKey input)
-        {
-            exit = false;
-            this.input = input;
-            keys.Add(ConsoleKey.LeftArrow, new MoveLeft());
-            keys.Add(ConsoleKey.RightArrow, new MoveRight());
-            keys.Add(ConsoleKey.UpArrow, new MoveUp());
-            keys.Add(ConsoleKey.DownArrow, new MoveDown());
-            keys.Add(ConsoleKey.Enter, new CellState());
-            keys.Add(ConsoleKey.Spacebar, new ExitInput());
-        }
+
         public void Execute()
         {
-            try
+            foreach (IKey key in keys)
             {
-                if (keys[input].Action())
+                if (key.Input == input)
                 {
-                    Exit = true;
+                    if (!key.Action())
+                    {
+                        exit = false;
+                    }
+                    break;
                 }
-            }
-            catch (KeyNotFoundException)
-            {
-                input = ConsoleKey.Enter;
             }
         }
     }

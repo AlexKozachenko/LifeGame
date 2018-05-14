@@ -5,17 +5,58 @@ using System.Threading;
 namespace LifeGame
 {
     internal class Life
-    {   // значения констант: длина и ширина поля из задания + 2 за счет рамки
-        protected const int fieldHeight = 12 ;
-        protected const int fieldWidth = 42;
-        private const int speed = 300;
+    {   
+        protected static int fieldHeight = 12;
+        protected static int fieldWidth = 42;
+        private static int speed = 300;
         // координаты начальной точки (верхний левый угол поля) с учетом счетчика поколений и рамки
         protected static int cellAbscissaX = 1;
         protected static int cellOrdinateY = 2;
-        protected static Cell[,] field = new Cell[fieldHeight, fieldWidth];
+        protected static Cell[,] field;
         private static int generationCounter = 0;
         private static List<Cell[,]> history = new List<Cell[,]>();
-        private static Cell[,] previousField = new Cell[fieldHeight, fieldWidth];
+        private static Cell[,] previousField;
+
+        static Life()
+        {
+            field = new Cell[fieldHeight, fieldWidth];
+            previousField = new Cell[fieldHeight, fieldWidth];
+            Initialize(field);
+            Initialize(previousField);
+        }
+
+        public Life()
+        {
+        }
+        public Life(int speed_)
+        {
+            speed = speed_;
+            field = new Cell[fieldHeight, fieldWidth];
+            previousField = new Cell[fieldHeight, fieldWidth];
+            Initialize(field);
+            Initialize(previousField);
+        }
+
+        public Life(int height, int width)
+        {
+            fieldHeight = height;
+            fieldWidth = width;
+            field = new Cell[fieldHeight, fieldWidth];
+            previousField = new Cell[fieldHeight, fieldWidth];
+            Initialize(field);
+            Initialize(previousField);
+        }
+
+        public Life(int height, int width, int speed_)
+        {
+            fieldHeight = height;
+            fieldWidth = width;
+            speed = speed_;
+            field = new Cell[fieldHeight, fieldWidth];
+            previousField = new Cell[fieldHeight, fieldWidth];
+            Initialize(field);
+            Initialize(previousField);
+        }
 
         public static bool CompareFields(Cell[,] field1, Cell[,] field2)
         { 
@@ -92,8 +133,6 @@ namespace LifeGame
         public void Game()
         {
             Console.CursorVisible = false;
-            Initialize(field);
-            Initialize(previousField);
             ManualInput();
             int liveCells;
             bool isEqual = false;
@@ -124,9 +163,9 @@ namespace LifeGame
             return liveCells;
         }
 
-        private void Initialize(Cell[,] field)
+        private static void Initialize(Cell[,] field)
         {
-            for (int i = 0; i < fieldHeight; i++)
+        for (int i = 0; i < fieldHeight; i++)
             {
                 for (int j = 0; j < fieldWidth; j++)
                 {
@@ -195,7 +234,7 @@ namespace LifeGame
             generationCounter++;
         }
 
-        private void PrintField()
+        private static void PrintField()
         {
             const char cellLetter = 'O';
             const char emptyCell = ' ';
