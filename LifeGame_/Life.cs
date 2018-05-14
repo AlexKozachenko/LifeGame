@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 
 namespace LifeGame
-{
+{ 
     internal class Life
     {   
         protected static int fieldHeight = 12;
