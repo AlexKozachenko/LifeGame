@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace LifeGame
-{
+{ 
     internal class MoveDown : Life, IKey
     {
         private const ConsoleKey input = ConsoleKey.DownArrow;
