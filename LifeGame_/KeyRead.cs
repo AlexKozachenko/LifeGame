@@ -6,7 +6,6 @@ namespace LifeGame
     internal class KeyRead : ICommand
     {
         private static bool exit = true;
-
         private ConsoleKey input;
         private List<IKey> keys = new List<IKey>();
 
