@@ -2,12 +2,12 @@
 
 namespace LifeGame
 {
-    public interface IKey
+     public interface IKey
     {
-        bool Action();
         ConsoleKey Input
         {
             get;
         }
+        bool Action();
     }
 }
