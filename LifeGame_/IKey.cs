@@ -8,6 +8,7 @@ namespace LifeGame
         {
             get;
         }
+
         bool Action();
     }
 }
