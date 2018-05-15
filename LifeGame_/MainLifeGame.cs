@@ -8,7 +8,7 @@ namespace LifeGame
         {
             foreach (string line in args)
             {
-                if (line[0] != 'w' && line[0] != 'h' && line[0] != 's')
+                if ((line[0] != 'w') && (line[0] != 'h') && (line[0] != 's'))
                 {
                     return;
                 }
@@ -23,8 +23,8 @@ namespace LifeGame
                     lifeGame.Game();
                     break;
                 case 1:
-                    if (args[0][0] == 's' 
-                        && Int32.TryParse(args[0].Remove(0, 1), out s))
+                    if ((args[0][0] == 's') 
+                        && (Int32.TryParse(args[0].Remove(0, 1), out s)))
                     {
                         lifeGame = new Life(s);
                         lifeGame.Game();
@@ -35,27 +35,27 @@ namespace LifeGame
                     }
                     break;
                 case 2:
-                    if (args[0][0] == 'h' 
-                        && args[1][0] == 'w' 
-                        && Int32.TryParse(args[0].Remove(0, 1), out h) 
-                        && Int32.TryParse(args[1].Remove(0, 1), out w))
+                    if ((args[0][0] == 'h') 
+                        && (args[1][0] == 'w') 
+                        && (Int32.TryParse(args[0].Remove(0, 1), out h)) 
+                        && (Int32.TryParse(args[1].Remove(0, 1), out w)))
                     {
                         lifeGame = new Life(h + 2, w + 2);
                         lifeGame.Game();
                     }
                     else
                     {
-                        if (args[0][0] == 'h' && args[1][0] == 's'
-                           && Int32.TryParse(args[0].Remove(0, 1), out h)
-                           && Int32.TryParse(args[1].Remove(0, 1), out s))
+                        if ((args[0][0] == 'h' && args[1][0] == 's')
+                           && (Int32.TryParse(args[0].Remove(0, 1), out h))
+                           && (Int32.TryParse(args[1].Remove(0, 1), out s)))
                         {
                             ShowMessage("Width ");
                         }
                         else
                         {
-                            if (args[0][0] == 's' && args[1][0] == 'w'
-                               && Int32.TryParse(args[0].Remove(0, 1), out s)
-                               && Int32.TryParse(args[1].Remove(0, 1), out w)) 
+                            if ((args[0][0] == 's' && args[1][0] == 'w')
+                               && (Int32.TryParse(args[0].Remove(0, 1), out s))
+                               && (Int32.TryParse(args[1].Remove(0, 1), out w))) 
                             {
                                 ShowMessage("Height ");
                             }
@@ -67,12 +67,12 @@ namespace LifeGame
                     }
                     break;
                 case 3:
-                    if (args[0][0] == 'h' 
-                        && args[1][0] == 's' 
-                        && args[2][0] == 'w'
-                        && Int32.TryParse(args[0].Remove(0, 1), out h)
-                        && Int32.TryParse(args[1].Remove(0, 1), out s)
-                        && Int32.TryParse(args[2].Remove(0, 1), out w))
+                    if ((args[0][0] == 'h') 
+                        && (args[1][0] == 's') 
+                        && (args[2][0] == 'w')
+                        && (Int32.TryParse(args[0].Remove(0, 1), out h))
+                        && (Int32.TryParse(args[1].Remove(0, 1), out s))
+                        && (Int32.TryParse(args[2].Remove(0, 1), out w)))
                     {
                         lifeGame = new Life(h + 2, w + 2, s);
                         lifeGame.Game();
