@@ -30,6 +30,7 @@ namespace LifeGame
         public Life()
         {
         }
+
         public Life(int speed_)
         {
             speed = speed_;
