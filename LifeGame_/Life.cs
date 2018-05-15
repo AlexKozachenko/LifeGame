@@ -14,6 +14,7 @@ namespace LifeGame
         protected static int fieldWidth = 42;
         private static int generationCounter = 0;
         private static List<Cell[,]> history = new List<Cell[,]>();
+        protected static List<IKey> keys = new List<IKey>();
         private static Cell[,] previousField;
         private static int speed = 300;
 
@@ -21,8 +22,9 @@ namespace LifeGame
         {
             field = new Cell[fieldHeight, fieldWidth];
             previousField = new Cell[fieldHeight, fieldWidth];
-            Initialize(field);
-            Initialize(previousField);
+            InitializeField(field);
+            InitializeField(previousField);
+            InitializeKeys();
         }
 
         public Life()
@@ -33,8 +35,8 @@ namespace LifeGame
             speed = speed_;
             field = new Cell[fieldHeight, fieldWidth];
             previousField = new Cell[fieldHeight, fieldWidth];
-            Initialize(field);
-            Initialize(previousField);
+            InitializeField(field);
+            InitializeField(previousField);
         }
 
         public Life(int height, int width)
@@ -43,8 +45,8 @@ namespace LifeGame
             fieldWidth = width;
             field = new Cell[fieldHeight, fieldWidth];
             previousField = new Cell[fieldHeight, fieldWidth];
-            Initialize(field);
-            Initialize(previousField);
+            InitializeField(field);
+            InitializeField(previousField);
         }
 
         public Life(int height, int width, int speed_)
@@ -54,8 +56,8 @@ namespace LifeGame
             speed = speed_;
             field = new Cell[fieldHeight, fieldWidth];
             previousField = new Cell[fieldHeight, fieldWidth];
-            Initialize(field);
-            Initialize(previousField);
+            InitializeField(field);
+            InitializeField(previousField);
         }
 
         public static bool CompareFields(Cell[,] field1, Cell[,] field2)
@@ -84,6 +86,27 @@ namespace LifeGame
                     destination[i, j].IsAlive = source[i, j].IsAlive;
                 }
             }
+        }
+
+        private static void InitializeField(Cell[,] field)
+        {
+            for (int i = 0; i < fieldHeight; i++)
+            {
+                for (int j = 0; j < fieldWidth; j++)
+                {
+                    field[i, j] = new Cell();
+                }
+            }
+        }
+
+        protected static void InitializeKeys()
+        {
+            keys.Add(new MoveLeft());
+            keys.Add(new MoveRight());
+            keys.Add(new MoveUp());
+            keys.Add(new MoveDown());
+            keys.Add(new CellState());
+            keys.Add(new ExitInput());
         }
 
         private int CountLiveNeighborCells(int y, int x)
@@ -163,17 +186,6 @@ namespace LifeGame
             return liveCells;
         }
 
-        private static void Initialize(Cell[,] field)
-        {
-        for (int i = 0; i < fieldHeight; i++)
-            {
-                for (int j = 0; j < fieldWidth; j++)
-                {
-                    field[i, j] = new Cell();
-                }
-            }
-        }
-
         private bool IsEqual()
         {
             bool isEqual = false;
@@ -228,7 +240,7 @@ namespace LifeGame
             }
             // запись предпоследней конфигурации в историю
             Cell[,] temp = new Cell[fieldHeight, fieldWidth];
-            Initialize(temp);
+            InitializeField(temp);
             CopyField(previousField, temp);
             history.Add(temp);
             generationCounter++;
