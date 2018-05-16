@@ -100,7 +100,7 @@ namespace LifeGame
             }
         }
 
-        protected static void InitializeKeys()
+        private static void InitializeKeys()
         {
             keys.Add(new MoveLeft());
             keys.Add(new MoveRight());

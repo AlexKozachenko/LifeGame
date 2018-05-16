@@ -5,10 +5,12 @@ namespace LifeGame
     internal class MoveRight : Life, IKey
     {
         private const ConsoleKey input = ConsoleKey.RightArrow;
+
         public ConsoleKey Input
         {
             get => input;
         }
+
         public bool Action()
         {
             cellAbscissaX++;

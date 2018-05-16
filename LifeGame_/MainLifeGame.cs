@@ -13,7 +13,7 @@ namespace LifeGame
                     return;
                 }
             }
-            SortStrings(ref args);
+            SortStrings(args);
             int h, w, s;
             Life lifeGame;
             switch (args.Length)
@@ -98,7 +98,7 @@ namespace LifeGame
             Console.ReadKey();
         }
 
-        public static void SortStrings(ref string[] strings)
+        public static void SortStrings(string[] strings)
         {
             if (strings.Length > 1)
             {
