@@ -14,7 +14,6 @@ namespace LifeGame
         protected static int fieldWidth = 42;
         private static int generationCounter = 0;
         private static List<Cell[,]> history = new List<Cell[,]>();
-        protected static List<IKey> keys = new List<IKey>();
         private static Cell[,] previousField;
         private static int speed = 300;
 
@@ -24,7 +23,6 @@ namespace LifeGame
             previousField = new Cell[fieldHeight, fieldWidth];
             InitializeField(field);
             InitializeField(previousField);
-            InitializeKeys();
         }
 
         public Life()
@@ -98,16 +96,6 @@ namespace LifeGame
                     field[i, j] = new Cell();
                 }
             }
-        }
-
-        private static void InitializeKeys()
-        {
-            keys.Add(new MoveLeft());
-            keys.Add(new MoveRight());
-            keys.Add(new MoveUp());
-            keys.Add(new MoveDown());
-            keys.Add(new CellState());
-            keys.Add(new ExitInput());
         }
 
         private int CountLiveNeighborCells(int y, int x)

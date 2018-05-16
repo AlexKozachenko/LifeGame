@@ -2,7 +2,7 @@
 
 namespace LifeGame
 {
-     public interface IKey
+    public interface IKey
     {
         ConsoleKey Input
         {

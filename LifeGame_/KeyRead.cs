@@ -2,7 +2,7 @@
 
 namespace LifeGame
 {
-    internal class KeyRead : Life, ICommand
+    internal class KeyRead : Keyboard, ICommand
     {
         private static bool exit = true;
         private ConsoleKey input;
