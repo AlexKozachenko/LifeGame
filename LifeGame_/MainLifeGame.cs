@@ -8,8 +8,8 @@ namespace LifeGame
         {
             const int frameDoubleThickness = 2;
             const char heightMarker = 'h';
-            const char widthMarker = 'w';
             const char speedMarker = 's';
+            const char widthMarker = 'w';
             int height = 0;
             int width = 0;
             int speed = 0;
