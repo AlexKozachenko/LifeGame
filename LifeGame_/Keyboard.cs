@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace LifeGame
+﻿namespace LifeGame
 {
     internal class Keyboard
     {
-        protected internal static IKey[] keys = new IKey[6];
+        private static IKey[] keys = new IKey[6];
 
         public Keyboard()
         {
@@ -14,6 +12,11 @@ namespace LifeGame
             keys[3] = new MoveDown();
             keys[4] = new CellState();
             keys[5] = new ExitInput();
+        }
+
+        public IKey[] Keys
+        {
+            get => keys;
         }
     }
 }
