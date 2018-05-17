@@ -11,8 +11,8 @@ namespace LifeGame
             const char speedMarker = 's';
             const char widthMarker = 'w';
             int height = 0;
-            int width = 0;
             int speed = 0;
+            int width = 0;
             // проверка на неформат
             foreach (string line in arguments)
             {
