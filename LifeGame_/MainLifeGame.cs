@@ -7,11 +7,18 @@ namespace LifeGame
         public static void Main(string[] arguments)
         {
             const int frameDoubleThickness = 2;
-            int height = 0, width = 0, speed = 0;
+            const char heightMarker = 'h';
+            const char widthMarker = 'w';
+            const char speedMarker = 's';
+            int height = 0;
+            int width = 0;
+            int speed = 0;
             // проверка на неформат
             foreach (string line in arguments)
             {
-                if ((line[0] != 'w') && (line[0] != 'h') && (line[0] != 's'))
+                if ((line[0] != widthMarker) 
+                    && (line[0] != heightMarker) 
+                    && (line[0] != 's'))
                 {
                     return;
                 }
@@ -38,10 +45,10 @@ namespace LifeGame
                 bool isNumber = false;
                 switch (line[0])
                 {
-                    case 'w':
+                    case widthMarker:
                         isNumber = int.TryParse(line.Remove(0, 1), out width);
                         break;
-                    case 'h':
+                    case heightMarker:
                         isNumber = int.TryParse(line.Remove(0, 1), out height);
                         break;
                     case 's':
@@ -64,36 +71,36 @@ namespace LifeGame
                     // прерывание с сообщением, если указанный параметр высота или ширина
                     switch (arguments[0][0])
                     {
-                        case 's':
+                        case speedMarker:
                             lifeGame = new Life(speed);
                             break;
-                        case 'h':
+                        case heightMarker:
                             ShowMessage("Width ");
                             return;
-                        case 'w':
+                        case widthMarker:
                             ShowMessage("Height ");
                             return;
                     }
                     break;
                 case 2:
-                    if ((arguments[0][0] == 'h') 
-                        && (arguments[1][0] == 'w'))
+                    if ((arguments[0][0] == heightMarker) 
+                        && (arguments[1][0] == widthMarker))
                     {
                         lifeGame = new Life(height + frameDoubleThickness, width + frameDoubleThickness);
                     }
                     // прерывание с сообщением, если один из указанных параметров - скорость
                     else
                     {
-                        if ((arguments[0][0] == 'h') 
-                            && (arguments[1][0] == 's'))
+                        if ((arguments[0][0] == heightMarker) 
+                            && (arguments[1][0] == speedMarker))
                         {
                             ShowMessage("Width ");
                             return;
                         }
                         else
                         {
-                            if ((arguments[0][0] == 's' 
-                                && arguments[1][0] == 'w'))
+                            if ((arguments[0][0] == speedMarker
+                                && arguments[1][0] == widthMarker))
                             {
                                 ShowMessage("Height ");
                                 return;
