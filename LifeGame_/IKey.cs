@@ -4,10 +4,7 @@ namespace LifeGame
 {
     public interface IKey
     {
-        ConsoleKey Input
-        {
-            get;
-        }
+        ConsoleKey Input { get; }
         
         bool Action();
     }

@@ -7,11 +7,11 @@ namespace LifeGame
     internal class Life
     {   
         // координаты начальной точки (верхний левый угол поля) с учетом счетчика поколений и рамки
-        protected static int cellAbscissaX = 1;
-        protected static int cellOrdinateY = 2;
-        protected static Cell[,] field;
-        protected static int fieldHeight = 12;
-        protected static int fieldWidth = 42;
+        protected internal static int cellAbscissaX = 1;
+        protected internal static int cellOrdinateY = 2;
+        protected internal static Cell[,] field;
+        protected internal static int fieldHeight = 12;
+        protected internal static int fieldWidth = 42;
         private static int generationCounter = 0;
         private static List<Cell[,]> history = new List<Cell[,]>();
         private static Cell[,] previousField;
