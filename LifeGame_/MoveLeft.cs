@@ -2,7 +2,7 @@
 
 namespace LifeGame
 {
-     internal class MoveLeft : Life, IKey
+    internal class MoveLeft : Life, IKey
     {
         private const ConsoleKey input = ConsoleKey.LeftArrow;
 

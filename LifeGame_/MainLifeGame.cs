@@ -18,7 +18,7 @@ namespace LifeGame
             {
                 if ((line[0] != widthMarker) 
                     && (line[0] != heightMarker) 
-                    && (line[0] != 's'))
+                    && (line[0] != speedMarker))
                 {
                     return;
                 }
