@@ -4,87 +4,108 @@ namespace LifeGame
 {
     internal class MainLifeGame
     {
-        public static void Main(string[] args)
+        public static void Main(string[] arguments)
         {
-            foreach (string line in args)
+            const int frameDoubleThickness = 2;
+            int height = 0, width = 0, speed = 0;
+            // проверка на неформат
+            foreach (string line in arguments)
             {
                 if ((line[0] != 'w') && (line[0] != 'h') && (line[0] != 's'))
                 {
                     return;
                 }
             }
-            SortStrings(args);
-            int h, w, s;
-            Life lifeGame;
-            switch (args.Length)
+            // проверка на повторы ширины, высоты, скорости
+            if (arguments.Length > 1)
+            {
+                for (int i = 0; i < arguments.Length; i++)
+                {
+                    for (int j = 0; j < arguments.Length; j++)
+                    {
+                        if ((j != i) && (arguments[j][0] == arguments[i][0]))
+                        {
+                            return;
+                        }
+                    }
+                }
+            }
+            // сортировка по алфавиту
+            SortStrings(arguments);
+            // прерывание, если все, что после первого знака - не число
+            foreach (string line in arguments)
+            {
+                bool isNumber = false;
+                switch (line[0])
+                {
+                    case 'w':
+                        isNumber = int.TryParse(line.Remove(0, 1), out width);
+                        break;
+                    case 'h':
+                        isNumber = int.TryParse(line.Remove(0, 1), out height);
+                        break;
+                    case 's':
+                        isNumber = int.TryParse(line.Remove(0, 1), out speed);
+                        break;
+                }
+                if (!isNumber)
+                {
+                    return;
+                }
+            }
+            Life lifeGame = null;
+            // инициализация игры разными конструкторами в зависимости от к-ва параметров
+            switch (arguments.Length)
             {
                 case 0:
                     lifeGame = new Life();
-                    lifeGame.Game();
                     break;
                 case 1:
-                    if ((args[0][0] == 's') 
-                        && (Int32.TryParse(args[0].Remove(0, 1), out s)))
+                    // прерывание с сообщением, если указанный параметр высота или ширина
+                    switch (arguments[0][0])
                     {
-                        lifeGame = new Life(s);
-                        lifeGame.Game();
-                    }
-                    else
-                    {
-                        return;
+                        case 's':
+                            lifeGame = new Life(speed);
+                            break;
+                        case 'h':
+                            ShowMessage("Width ");
+                            return;
+                        case 'w':
+                            ShowMessage("Height ");
+                            return;
                     }
                     break;
                 case 2:
-                    if ((args[0][0] == 'h') 
-                        && (args[1][0] == 'w') 
-                        && (Int32.TryParse(args[0].Remove(0, 1), out h)) 
-                        && (Int32.TryParse(args[1].Remove(0, 1), out w)))
+                    if ((arguments[0][0] == 'h') 
+                        && (arguments[1][0] == 'w'))
                     {
-                        lifeGame = new Life(h + 2, w + 2);
-                        lifeGame.Game();
+                        lifeGame = new Life(height + frameDoubleThickness, width + frameDoubleThickness);
                     }
+                    // прерывание с сообщением, если один из указанных параметров - скорость
                     else
                     {
-                        if ((args[0][0] == 'h' && args[1][0] == 's')
-                           && (Int32.TryParse(args[0].Remove(0, 1), out h))
-                           && (Int32.TryParse(args[1].Remove(0, 1), out s)))
+                        if ((arguments[0][0] == 'h') 
+                            && (arguments[1][0] == 's'))
                         {
                             ShowMessage("Width ");
+                            return;
                         }
                         else
                         {
-                            if ((args[0][0] == 's' && args[1][0] == 'w')
-                               && (Int32.TryParse(args[0].Remove(0, 1), out s))
-                               && (Int32.TryParse(args[1].Remove(0, 1), out w))) 
+                            if ((arguments[0][0] == 's' 
+                                && arguments[1][0] == 'w'))
                             {
                                 ShowMessage("Height ");
-                            }
-                            else
-                            {
                                 return;
                             }
                         }
                     }
                     break;
                 case 3:
-                    if ((args[0][0] == 'h') 
-                        && (args[1][0] == 's') 
-                        && (args[2][0] == 'w')
-                        && (Int32.TryParse(args[0].Remove(0, 1), out h))
-                        && (Int32.TryParse(args[1].Remove(0, 1), out s))
-                        && (Int32.TryParse(args[2].Remove(0, 1), out w)))
-                    {
-                        lifeGame = new Life(h + 2, w + 2, s);
-                        lifeGame.Game();
-                    }
-                    else
-                    {
-                        return;
-                    }
+                    lifeGame = new Life(height + frameDoubleThickness, width + frameDoubleThickness, speed);
                     break;
-                default:
-                    return;
             }
+            lifeGame.Game();
             Console.ReadKey();
         }
 
@@ -115,10 +136,6 @@ namespace LifeGame
                         }
                     }
                 }
-            }
-            else
-            {
-                return;
             }
         }
     }

@@ -4,16 +4,16 @@ namespace LifeGame
 {
     internal class Keyboard
     {
-        protected static List<IKey> keys = new List<IKey>();
+        protected internal static IKey[] keys = new IKey[6];
 
         public Keyboard()
         {
-            keys.Add(new MoveLeft());
-            keys.Add(new MoveRight());
-            keys.Add(new MoveUp());
-            keys.Add(new MoveDown());
-            keys.Add(new CellState());
-            keys.Add(new ExitInput());
+            keys[0] = new MoveLeft();
+            keys[1] = new MoveRight();
+            keys[2] = new MoveUp();
+            keys[3] = new MoveDown();
+            keys[4] = new CellState();
+            keys[5] = new ExitInput();
         }
     }
 }

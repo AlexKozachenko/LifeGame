@@ -3,8 +3,8 @@
     internal class Cell
     {
         private bool isAlive = false;
-
-        public bool IsAlive
+        
+    public bool IsAlive
         {
             get => isAlive;
             set => isAlive = value;
