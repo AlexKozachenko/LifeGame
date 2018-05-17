@@ -2,7 +2,7 @@
 {
     internal class Keyboard
     {
-        private static IKey[] keys = new IKey[6];
+        protected internal static IKey[] keys = new IKey[6];
 
         public Keyboard()
         {
@@ -12,11 +12,6 @@
             keys[3] = new MoveDown();
             keys[4] = new CellState();
             keys[5] = new ExitInput();
-        }
-
-        public IKey[] Keys
-        {
-            get => keys;
         }
     }
 }

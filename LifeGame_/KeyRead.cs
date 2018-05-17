@@ -19,7 +19,7 @@ namespace LifeGame
 
         public void Execute()
         {
-            foreach (IKey key in Keys)
+            foreach (IKey key in keys)
             {
                 if (key.Input == input)
                 {
