@@ -51,7 +51,7 @@ namespace LifeGame
                     case heightMarker:
                         isNumber = int.TryParse(line.Remove(0, 1), out height);
                         break;
-                    case 's':
+                    case speedMarker:
                         isNumber = int.TryParse(line.Remove(0, 1), out speed);
                         break;
                 }
