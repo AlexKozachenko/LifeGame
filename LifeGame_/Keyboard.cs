@@ -1,17 +1,19 @@
-﻿namespace LifeGame
+﻿using System.Collections.Generic;
+
+namespace LifeGame
 {
     internal class Keyboard
     {
-        protected internal static IKey[] keys = new IKey[6];
+        protected internal static List<IKey> keys = new List<IKey>();
 
         public Keyboard()
         {
-            keys[0] = new MoveLeft();
-            keys[1] = new MoveRight();
-            keys[2] = new MoveUp();
-            keys[3] = new MoveDown();
-            keys[4] = new CellState();
-            keys[5] = new ExitInput();
+            keys.Add(new MoveLeft());
+            keys.Add(new MoveRight());
+            keys.Add(new MoveUp());
+            keys.Add(new MoveDown());
+            keys.Add(new CellState());
+            keys.Add(new ExitInput());
         }
     }
 }
