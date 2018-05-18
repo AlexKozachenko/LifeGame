@@ -2,7 +2,7 @@
 
 namespace LifeGame
 {
-    internal class MoveUp : Life, IKey
+    internal class MoveUp : IKey
     {
         private const ConsoleKey input = ConsoleKey.UpArrow;
 
@@ -13,11 +13,11 @@ namespace LifeGame
 
         public bool Action()
         {
-            cellOrdinateY--;
+            Life.CellOrdinateY--;
             // если ордината заходит на верхнюю границу рамки, смещаем под нее (0 - счетчик, 1 - рамка, 2 - начальная ордината)
-            if (cellOrdinateY == 1)
+            if (Life.CellOrdinateY == 1)
             {
-                cellOrdinateY = 2;
+                Life.CellOrdinateY = 2;
             }
             return true;
         }

@@ -2,7 +2,7 @@
 
 namespace LifeGame
 {
-    internal class MoveLeft : Life, IKey
+    internal class MoveLeft : IKey
     {
         private const ConsoleKey input = ConsoleKey.LeftArrow;
 
@@ -13,11 +13,11 @@ namespace LifeGame
 
         public bool Action()
         {
-            cellAbscissaX--;
+            Life.CellAbscissaX--;
             // если абсцисса заходит на левую границу рамки, смещаем на 1 вправо (0 - рамка, 1 - начальная абсцисса)
-            if (cellAbscissaX == 0)
+            if (Life.CellAbscissaX == 0)
             {
-                cellAbscissaX = 1;
+                Life.CellAbscissaX = 1;
             }
             return true;
         }

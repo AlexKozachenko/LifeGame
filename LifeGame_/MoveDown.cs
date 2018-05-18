@@ -2,7 +2,7 @@
 
 namespace LifeGame
 { 
-    internal class MoveDown : Life, IKey
+    internal class MoveDown : IKey
     {
         private const ConsoleKey input = ConsoleKey.DownArrow;
 
@@ -13,11 +13,11 @@ namespace LifeGame
 
         public bool Action()
         {
-            cellOrdinateY++;
+            Life.CellOrdinateY++;
             // если ордината заходит на нижнюю границу, устанавливаем над ней
-            if (cellOrdinateY > fieldHeight - 1)
+            if (Life.CellOrdinateY > Life.FieldHeight - 1)
             {
-                cellOrdinateY = fieldHeight - 1;
+                Life.CellOrdinateY = Life.FieldHeight - 1;
             }
             return true;
         }

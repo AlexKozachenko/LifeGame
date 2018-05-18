@@ -2,7 +2,7 @@
 
 namespace LifeGame
 {
-    internal class CellState : Life, IKey
+    internal class CellState : IKey
     {
         private const ConsoleKey input = ConsoleKey.Enter;
 
@@ -14,7 +14,7 @@ namespace LifeGame
         public bool Action()
         {
             //ордината смещается вниз за счет счетчика поколений, поднимаем на 1
-            field[cellOrdinateY - 1, cellAbscissaX].IsAlive = !(field[cellOrdinateY - 1, cellAbscissaX].IsAlive);
+            Life.Field[Life.CellOrdinateY - 1, Life.CellAbscissaX].IsAlive = !(Life.Field[Life.CellOrdinateY - 1, Life.CellAbscissaX].IsAlive);
             return true;
         }
     }

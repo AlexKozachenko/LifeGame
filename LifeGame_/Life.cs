@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Threading;
 
 namespace LifeGame
-{ 
+{
     internal class Life
-    {   
+    {
         // координаты начальной точки (верхний левый угол поля) с учетом счетчика поколений и рамки
-        protected internal static int cellAbscissaX = 1;
-        protected internal static int cellOrdinateY = 2;
-        protected internal static Cell[,] field;
-        protected internal static int fieldHeight = 12;
-        protected internal static int fieldWidth = 42;
+        private static int cellAbscissaX = 1;
+        private static int cellOrdinateY = 2;
+        private static Cell[,] field;
+        private static int fieldHeight = 12;
+        private static int fieldWidth = 42;
         private static int generationCounter = 0;
         private static List<Cell[,]> history = new List<Cell[,]>();
         private static Cell[,] previousField;
@@ -57,6 +57,35 @@ namespace LifeGame
             previousField = new Cell[fieldHeight, fieldWidth];
             InitializeField(field);
             InitializeField(previousField);
+        }
+
+        public static int CellAbscissaX
+        {
+            get => cellAbscissaX;
+            set => cellAbscissaX = value;
+        }
+
+        public static int CellOrdinateY
+        {
+            get => cellOrdinateY;
+            set => cellOrdinateY = value;
+        }
+
+        public static Cell[,] Field
+        {
+            get => field;
+        }
+
+        public static int FieldHeight
+        {
+            get => fieldHeight;
+            set => fieldHeight = value;
+        }
+
+        public static int FieldWidth
+        {
+            get => fieldWidth;
+            set => fieldWidth = value;
         }
 
         public static bool CompareFields(Cell[,] field1, Cell[,] field2)
