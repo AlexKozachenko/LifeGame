@@ -79,7 +79,6 @@ namespace LifeGame
         public static int FieldHeight
         {
             get => fieldHeight;
-            set => fieldHeight = value;
         }
 
         public static int FieldWidth
