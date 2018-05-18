@@ -6,7 +6,7 @@ namespace LifeGame
     {
         private static ArrayList keys = new ArrayList();
 
-        public Keyboard()
+        static Keyboard()
         {
             keys.Add(new MoveLeft());
             keys.Add(new MoveRight());
