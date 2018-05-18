@@ -2,7 +2,7 @@
 
 namespace LifeGame
 {
-    internal class KeyRead : Keyboard, ICommand
+    internal class KeyRead : ICommand
     {
         private static bool exit = true;
         private ConsoleKey input;
@@ -19,7 +19,7 @@ namespace LifeGame
 
         public void Execute()
         {
-            foreach (IKey key in Keys)
+            foreach (IKey key in Keyboard.Keys)
             {
                 if (key.Input == input)
                 {

@@ -2,7 +2,7 @@
 
 namespace LifeGame
 {
-    internal class ExitInput : Life, IKey
+    internal class ExitInput : IKey
     {
         private const ConsoleKey input = ConsoleKey.Spacebar;
 

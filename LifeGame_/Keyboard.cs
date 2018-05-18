@@ -16,6 +16,6 @@ namespace LifeGame
             keys.Add(new ExitInput());
         }
 
-        public ArrayList Keys { get => keys;}
+        public static ArrayList Keys { get => keys;}
     }
 }
