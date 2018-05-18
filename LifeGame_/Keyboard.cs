@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections/*.Generic*/;
 
 namespace LifeGame
 {
     internal class Keyboard
     {
-        protected internal static List<IKey> keys = new List<IKey>();
+        private static ArrayList keys = new ArrayList();
 
         public Keyboard()
         {
@@ -15,5 +15,7 @@ namespace LifeGame
             keys.Add(new CellState());
             keys.Add(new ExitInput());
         }
+
+        public ArrayList Keys { get => keys;}
     }
 }
