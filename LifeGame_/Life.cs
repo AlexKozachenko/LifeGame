@@ -85,7 +85,6 @@ namespace LifeGame
         public static int FieldWidth
         {
             get => fieldWidth;
-            set => fieldWidth = value;
         }
 
         public static bool CompareFields(Cell[,] field1, Cell[,] field2)
