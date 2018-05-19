@@ -2,22 +2,20 @@
 
 namespace LifeGame
 { 
-    internal class MoveDown : IKey
+    internal class MoveDown : Key
     {
-        private const ConsoleKey input = ConsoleKey.DownArrow;
-
-        public ConsoleKey Input
+        public MoveDown()
         {
-            get => input;
+            Input = ConsoleKey.DownArrow;
         }
-
-        public bool Action()
+        
+        public override bool Action(ref Life life)
         {
-            Life.CellOrdinateY++;
+            life.CellOrdinateY++;
             // если ордината заходит на нижнюю границу, устанавливаем над ней
-            if (Life.CellOrdinateY > Life.FieldHeight - 1)
+            if (life.CellOrdinateY > life.FieldHeight - 1)
             {
-                Life.CellOrdinateY = Life.FieldHeight - 1;
+                life.CellOrdinateY = life.FieldHeight - 1;
             }
             return true;
         }

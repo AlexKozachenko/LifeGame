@@ -12,6 +12,34 @@ namespace LifeGame
         private static int speed = 0;
         private static int width = 0;
 
+        private static bool CheckFormat(string[] lines)
+        {
+            bool isNumber = true;
+            foreach (string line in lines)
+            {
+                switch (line[0])
+                {
+                    case widthMarker:
+                        isNumber = int.TryParse(line.Remove(0, 1), out width);
+                        break;
+                    case heightMarker:
+                        isNumber = int.TryParse(line.Remove(0, 1), out height);
+                        break;
+                    case speedMarker:
+                        isNumber = int.TryParse(line.Remove(0, 1), out speed);
+                        break;
+                    default:
+                        isNumber = false;
+                        break;
+                }
+                if (!isNumber)
+                {
+                    break;
+                }
+            }
+            return isNumber;
+        }
+        
         public static void Main(string[] arguments)
         {
             if (CheckFormat(arguments))
@@ -72,38 +100,11 @@ namespace LifeGame
                 }
                 if (lifeGame != null)
                 {
+                    Life.ManualInput(ref lifeGame);
                     lifeGame.Game();
                     Console.ReadKey();
                 }
             }
-        }
-
-        private static bool CheckFormat(string[] lines)
-        {
-            bool isNumber = true;
-            foreach (string line in lines)
-            {
-                switch (line[0])
-                {
-                    case widthMarker:
-                        isNumber = int.TryParse(line.Remove(0, 1), out width);
-                        break;
-                    case heightMarker:
-                        isNumber = int.TryParse(line.Remove(0, 1), out height);
-                        break;
-                    case speedMarker:
-                        isNumber = int.TryParse(line.Remove(0, 1), out speed);
-                        break;
-                    default:
-                        isNumber = false;
-                        break;
-                }
-                if (!isNumber)
-                {
-                    break;
-                }
-            }
-            return isNumber;
         }
 
         private static void ShowMessage(string line)
@@ -137,3 +138,4 @@ namespace LifeGame
         }
     }
 }
+

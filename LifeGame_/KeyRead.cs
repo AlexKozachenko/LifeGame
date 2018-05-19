@@ -6,9 +6,11 @@ namespace LifeGame
     {
         private static bool exit = true;
         private ConsoleKey input;
-       
-        public KeyRead(ConsoleKey input)
+        private Life life;
+
+        public KeyRead(ConsoleKey input, ref Life life)
         {
+            this.life = life;
             this.input = input;
         }
 
@@ -19,11 +21,11 @@ namespace LifeGame
 
         public void Execute()
         {
-            foreach (IKey key in Keyboard.Keys)
+            foreach (Key key in Keyboard.Keys)
             {
                 if (key.Input == input)
                 {
-                    if (!key.Action())
+                    if (!key.Action(ref life))
                     {
                         exit = false;
                     }

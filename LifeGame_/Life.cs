@@ -7,45 +7,32 @@ namespace LifeGame
     internal class Life
     {
         // координаты начальной точки (верхний левый угол поля) с учетом счетчика поколений и рамки
-        private static int cellAbscissaX = 1;
-        private static int cellOrdinateY = 2;
-        private static Cell[,] field;
-        private static int fieldHeight = 12;
-        private static int fieldWidth = 42;
-        private static int generationCounter = 0;
-        private static List<Cell[,]> history = new List<Cell[,]>();
-        private static Cell[,] previousField;
-        private static int speed = 300;
-
-        static Life()
-        {
-            field = new Cell[fieldHeight, fieldWidth];
-            previousField = new Cell[fieldHeight, fieldWidth];
-            InitializeField(field);
-            InitializeField(previousField);
-        }
-
+        private int cellAbscissaX = 1;
+        private int cellOrdinateY = 2;
+        private Cell[,] field;
+        private int fieldHeight = 12;
+        private int fieldWidth = 42;
+        private int generationCounter = 0;
+        private List<Cell[,]> history = new List<Cell[,]>();
+        private Cell[,] previousField;
+        private int speed = 300;
+      
         public Life()
         {
+            Initialization();
         }
 
         public Life(int speed_)
         {
             speed = speed_;
-            field = new Cell[fieldHeight, fieldWidth];
-            previousField = new Cell[fieldHeight, fieldWidth];
-            InitializeField(field);
-            InitializeField(previousField);
+            Initialization();
         }
 
         public Life(int height, int width)
         {
             fieldHeight = height;
             fieldWidth = width;
-            field = new Cell[fieldHeight, fieldWidth];
-            previousField = new Cell[fieldHeight, fieldWidth];
-            InitializeField(field);
-            InitializeField(previousField);
+            Initialization();
         }
 
         public Life(int height, int width, int speed_)
@@ -53,40 +40,54 @@ namespace LifeGame
             fieldHeight = height;
             fieldWidth = width;
             speed = speed_;
-            field = new Cell[fieldHeight, fieldWidth];
-            previousField = new Cell[fieldHeight, fieldWidth];
-            InitializeField(field);
-            InitializeField(previousField);
+            Initialization();
         }
 
-        public static int CellAbscissaX
+        public int CellAbscissaX
         {
             get => cellAbscissaX;
             set => cellAbscissaX = value;
         }
 
-        public static int CellOrdinateY
+        public int CellOrdinateY
         {
             get => cellOrdinateY;
             set => cellOrdinateY = value;
         }
 
-        public static Cell[,] Field
+        public Cell[,] Field
         {
             get => field;
         }
 
-        public static int FieldHeight
+        public int FieldHeight
         {
             get => fieldHeight;
         }
 
-        public static int FieldWidth
+        public int FieldWidth
         {
             get => fieldWidth;
         }
 
-        public static bool CompareFields(Cell[,] field1, Cell[,] field2)
+        public static void ManualInput(ref Life life)
+        {
+            do
+            {
+                const char accentuationLetter = 'X';
+                Console.CursorVisible = false;
+                life.PrintField();
+                Console.SetCursorPosition(life.CellAbscissaX, life.CellOrdinateY);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write(accentuationLetter);
+                Console.ResetColor();
+                Console.SetCursorPosition(life.CellAbscissaX, life.CellOrdinateY);
+                ICommand useKey = new KeyRead(Console.ReadKey().Key, ref life);
+                useKey.Execute();
+            } while (KeyRead.Exit);
+        }
+
+        private bool CompareFields(Cell[,] field1, Cell[,] field2)
         { 
             bool isEqual = true;
             for (int i = 0; i < fieldHeight; i++)
@@ -103,24 +104,13 @@ namespace LifeGame
             return isEqual;
         }
 
-        public static void CopyField(Cell[,] source, Cell[,] destination)
+        private void CopyField(Cell[,] source, Cell[,] destination)
         {
             for (int i = 0; i < fieldHeight; i++)
             {
                 for (int j = 0; j < fieldWidth; j++)
                 {
                     destination[i, j].IsAlive = source[i, j].IsAlive;
-                }
-            }
-        }
-
-        private static void InitializeField(Cell[,] field)
-        {
-            for (int i = 0; i < fieldHeight; i++)
-            {
-                for (int j = 0; j < fieldWidth; j++)
-                {
-                    field[i, j] = new Cell();
                 }
             }
         }
@@ -134,8 +124,8 @@ namespace LifeGame
             const int xBuffer = 0;
             // ординаты хранятся в строке 1
             const int yBuffer = 1;
-            int neighborCellIndex = 0;
             int liveNeighborCells = 0;
+            int neighborCellIndex = 0;
             // двумерный массив для хранения координат соседних ячеек
             int[,] neighborCells = new int[maxCountOfNeighborCells, dimensions];
             for (int i = y - 1; i <= y + 1; i++)
@@ -171,8 +161,6 @@ namespace LifeGame
 
         public void Game()
         {
-            Console.CursorVisible = false;
-            ManualInput();
             int liveCells;
             bool isEqual = false;
             do
@@ -202,6 +190,25 @@ namespace LifeGame
             return liveCells;
         }
 
+        private void Initialization()
+        {
+            field = new Cell[fieldHeight, fieldWidth];
+            previousField = new Cell[fieldHeight, fieldWidth];
+            InitializeField(field);
+            InitializeField(previousField);
+        }
+
+        private void InitializeField(Cell[,] field)
+        {
+            for (int i = 0; i < fieldHeight; i++)
+            {
+                for (int j = 0; j < fieldWidth; j++)
+                {
+                    field[i, j] = new Cell();
+                }
+            }
+        }
+
         private bool IsEqual()
         {
             bool isEqual = false;
@@ -213,22 +220,6 @@ namespace LifeGame
                 }
             }
             return isEqual;
-        }
-
-        private void ManualInput()
-        {   
-            do
-            {
-                const char accentuationLetter = 'X';
-                PrintField();
-                Console.SetCursorPosition(cellAbscissaX, cellOrdinateY);
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(accentuationLetter);
-                Console.ResetColor();
-                Console.SetCursorPosition(cellAbscissaX, cellOrdinateY);
-                ICommand useKey = new KeyRead(Console.ReadKey().Key);
-                useKey.Execute();
-            } while (KeyRead.Exit);
         }
 
         private void NextGeneration()
@@ -262,7 +253,7 @@ namespace LifeGame
             generationCounter++;
         }
 
-        private static void PrintField()
+        private void PrintField()
         {
             const char cellLetter = 'O';
             const char emptyCell = ' ';

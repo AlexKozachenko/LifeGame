@@ -2,16 +2,14 @@
 
 namespace LifeGame
 {
-    internal class ExitInput : IKey
+    internal class ExitInput : Key
     {
-        private const ConsoleKey input = ConsoleKey.Spacebar;
-
-        public ConsoleKey Input
+        public ExitInput()
         {
-            get => input;
+            Input = ConsoleKey.Spacebar;
         }
 
-        public bool Action()
+        public override bool Action(ref Life life)
         {
             return false;
         }

@@ -2,22 +2,20 @@
 
 namespace LifeGame
 {
-    internal class MoveUp : IKey
+    internal class MoveUp : Key
     {
-        private const ConsoleKey input = ConsoleKey.UpArrow;
-
-        public ConsoleKey Input
+        public MoveUp()
         {
-            get => input;
+            Input = ConsoleKey.UpArrow;
         }
 
-        public bool Action()
+        public override bool Action(ref Life life)
         {
-            Life.CellOrdinateY--;
+            life.CellOrdinateY--;
             // если ордината заходит на верхнюю границу рамки, смещаем под нее (0 - счетчик, 1 - рамка, 2 - начальная ордината)
-            if (Life.CellOrdinateY == 1)
+            if (life.CellOrdinateY == 1)
             {
-                Life.CellOrdinateY = 2;
+                life.CellOrdinateY = 2;
             }
             return true;
         }

@@ -2,19 +2,17 @@
 
 namespace LifeGame
 {
-    internal class CellState : IKey
+    internal class CellState : Key
     {
-        private const ConsoleKey input = ConsoleKey.Enter;
-
-        public ConsoleKey Input
+        public CellState()
         {
-            get => input;
+            Input = ConsoleKey.Enter;
         }
 
-        public bool Action()
+        public override bool Action(ref Life life)
         {
             //ордината смещается вниз за счет счетчика поколений, поднимаем на 1
-            Life.Field[Life.CellOrdinateY - 1, Life.CellAbscissaX].IsAlive = !(Life.Field[Life.CellOrdinateY - 1, Life.CellAbscissaX].IsAlive);
+            life.Field[life.CellOrdinateY - 1, life.CellAbscissaX].IsAlive = !(life.Field[life.CellOrdinateY - 1, life.CellAbscissaX].IsAlive);
             return true;
         }
     }

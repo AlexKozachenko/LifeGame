@@ -46,7 +46,7 @@
     <Compile Include="CellState.cs" />
     <Compile Include="ExitInput.cs" />
     <Compile Include="ICommand.cs" />
-    <Compile Include="IKey.cs" />
+    <Compile Include="Key.cs" />
     <Compile Include="Life.cs" />
     <Compile Include="MainLifeGame.cs" />
     <Compile Include="MoveDown.cs" />

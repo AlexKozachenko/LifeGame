@@ -2,22 +2,20 @@
 
 namespace LifeGame
 {
-    internal class MoveLeft : IKey
+    internal class MoveLeft : Key
     {
-        private const ConsoleKey input = ConsoleKey.LeftArrow;
-
-        public ConsoleKey Input
+        public MoveLeft()
         {
-            get => input;
+            Input = ConsoleKey.LeftArrow;
         }
-
-        public bool Action()
+        
+        public override bool Action(ref Life life)
         {
-            Life.CellAbscissaX--;
+            life.CellAbscissaX--;
             // если абсцисса заходит на левую границу рамки, смещаем на 1 вправо (0 - рамка, 1 - начальная абсцисса)
-            if (Life.CellAbscissaX == 0)
+            if (life.CellAbscissaX == 0)
             {
-                Life.CellAbscissaX = 1;
+                life.CellAbscissaX = 1;
             }
             return true;
         }
