@@ -121,16 +121,16 @@ namespace LifeGame
         {
             if (strings.Length > 1)
             {
-                string temp;
+                string buffer;
                 for (int i = 0; i < strings.Length - 1; i++)
                 {
                     for (int j = i + 1; j < strings.Length; j++)
                     {
                         if (string.Compare(strings[i], strings[j]) > 0)
                         {
-                            temp = strings[i];
+                            buffer = strings[i];
                             strings[i] = strings[j];
-                            strings[j] = temp;
+                            strings[j] = buffer;
                         }
                     }
                 }
