@@ -21,7 +21,7 @@ namespace LifeGame
 
         public void Execute()
         {
-            foreach (Key key in Keyboard.Keys)
+            foreach (Key key in new Keyboard())
             {
                 if (key.Input == input)
                 {

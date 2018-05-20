@@ -28,9 +28,9 @@ namespace LifeGame
                     case speedMarker:
                         isNumber = int.TryParse(line.Remove(0, 1), out speed);
                         break;
-                    default:
-                        isNumber = false;
-                        break;
+                    //default:
+                    //    isNumber = false;
+                    //    break;
                 }
                 if (!isNumber)
                 {

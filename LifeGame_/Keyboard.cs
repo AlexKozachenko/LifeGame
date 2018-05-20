@@ -1,13 +1,14 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 
 namespace LifeGame
 {
     internal class Keyboard
     {
-        private static ArrayList keys = new ArrayList();
+        private IEnumerable<Key> keyList = new List<Key>();
 
-        static Keyboard()
+        public Keyboard()
         {
+            List<Key> keys = (List<Key>)keyList;
             keys.Add(new MoveLeft());
             keys.Add(new MoveRight());
             keys.Add(new MoveUp());
@@ -16,6 +17,9 @@ namespace LifeGame
             keys.Add(new ExitInput());
         }
 
-        public static ArrayList Keys { get => keys;}
+        public IEnumerator<Key> GetEnumerator()
+        {
+            return keyList.GetEnumerator();
+        }
     }
 }
