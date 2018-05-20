@@ -9,10 +9,10 @@ namespace LifeGame
         public Keyboard()
         {
             List<Key> keys = (List<Key>)keyList;
-            keys.Add(new MoveLeft());
-            keys.Add(new MoveRight());
             keys.Add(new MoveUp());
             keys.Add(new MoveDown());
+            keys.Add(new MoveLeft());
+            keys.Add(new MoveRight());
             keys.Add(new CellState());
             keys.Add(new ExitInput());
         }
