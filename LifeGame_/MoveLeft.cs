@@ -9,7 +9,7 @@ namespace LifeGame
             Input = ConsoleKey.LeftArrow;
         }
         
-        public override bool Action(ref Life life)
+        public override bool Action(Life life)
         {
             life.CellAbscissaX--;
             // если абсцисса заходит на левую границу рамки, смещаем на 1 вправо (0 - рамка, 1 - начальная абсцисса)

@@ -9,7 +9,7 @@ namespace LifeGame
             Input = ConsoleKey.Enter;
         }
 
-        public override bool Action(ref Life life)
+        public override bool Action(Life life)
         {
             //ордината смещается вниз за счет счетчика поколений, поднимаем на 1
             life.Field[life.CellOrdinateY - 1, life.CellAbscissaX].IsAlive = !(life.Field[life.CellOrdinateY - 1, life.CellAbscissaX].IsAlive);

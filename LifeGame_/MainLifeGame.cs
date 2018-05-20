@@ -100,7 +100,7 @@ namespace LifeGame
                 }
                 if (lifeGame != null)
                 {
-                    Life.ManualInput(ref lifeGame);
+                    Life.ManualInput(lifeGame);
                     lifeGame.Game();
                     Console.ReadKey();
                 }

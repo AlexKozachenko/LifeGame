@@ -8,7 +8,7 @@ namespace LifeGame
         private ConsoleKey input;
         private Life life;
 
-        public KeyRead(ConsoleKey input, ref Life life)
+        public KeyRead(ConsoleKey input, Life life)
         {
             this.life = life;
             this.input = input;
@@ -25,7 +25,7 @@ namespace LifeGame
             {
                 if (key.Input == input)
                 {
-                    if (!key.Action(ref life))
+                    if (!key.Action(life))
                     {
                         exit = false;
                     }

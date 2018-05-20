@@ -12,6 +12,6 @@ namespace LifeGame
             set => input = value;
         }
 
-        public abstract bool Action(ref Life life);
+        public abstract bool Action(Life life);
     }
 }

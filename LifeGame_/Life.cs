@@ -70,7 +70,7 @@ namespace LifeGame
             get => fieldWidth;
         }
 
-        public static void ManualInput(ref Life life)
+        public static void ManualInput(Life life)
         {
             do
             {
@@ -82,7 +82,7 @@ namespace LifeGame
                 Console.Write(accentuationLetter);
                 Console.ResetColor();
                 Console.SetCursorPosition(life.CellAbscissaX, life.CellOrdinateY);
-                ICommand useKey = new KeyRead(Console.ReadKey().Key, ref life);
+                ICommand useKey = new KeyRead(Console.ReadKey().Key, life);
                 useKey.Execute();
             } while (KeyRead.Exit);
         }

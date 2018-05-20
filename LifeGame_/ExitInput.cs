@@ -9,7 +9,7 @@ namespace LifeGame
             Input = ConsoleKey.Spacebar;
         }
 
-        public override bool Action(ref Life life)
+        public override bool Action(Life life)
         {
             return false;
         }

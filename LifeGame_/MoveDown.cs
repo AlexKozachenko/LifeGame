@@ -9,7 +9,7 @@ namespace LifeGame
             Input = ConsoleKey.DownArrow;
         }
         
-        public override bool Action(ref Life life)
+        public override bool Action(Life life)
         {
             life.CellOrdinateY++;
             // если ордината заходит на нижнюю границу, устанавливаем над ней
