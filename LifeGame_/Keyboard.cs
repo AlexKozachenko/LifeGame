@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 
 namespace LifeGame
 {
-    internal class Keyboard
+    internal class Keyboard : IEnumerable
     {
-        private IEnumerable<Key> keyList = new List<Key>();
+        private ICollection<Key> keys = new List<Key>();
 
         public Keyboard()
         {
-            List<Key> keys = (List<Key>)keyList;
             keys.Add(new MoveUp());
             keys.Add(new MoveDown());
             keys.Add(new MoveLeft());
@@ -17,9 +17,9 @@ namespace LifeGame
             keys.Add(new ExitInput());
         }
 
-        public IEnumerator<Key> GetEnumerator()
+        public IEnumerator GetEnumerator()
         {
-            return keyList.GetEnumerator();
+            return keys.GetEnumerator();
         }
     }
 }
