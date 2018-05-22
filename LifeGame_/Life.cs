@@ -196,6 +196,7 @@ namespace LifeGame
             previousField = new Cell[fieldHeight, fieldWidth];
             InitializeField(field);
             InitializeField(previousField);
+
         }
 
         private void InitializeField(Cell[,] field)
@@ -246,10 +247,10 @@ namespace LifeGame
                 }
             }
             // запись предпоследней конфигурации в историю
-            Cell[,] temp = new Cell[fieldHeight, fieldWidth];
-            InitializeField(temp);
-            CopyField(previousField, temp);
-            history.Add(temp);
+            Cell[,] buffer = new Cell[fieldHeight, fieldWidth];
+            InitializeField(buffer);
+            CopyField(previousField, buffer);
+            history.Add(buffer);
             generationCounter++;
         }
 

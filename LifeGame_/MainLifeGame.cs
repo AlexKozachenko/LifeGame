@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace LifeGame
 {
     internal class MainLifeGame
     {
+        private static List<string> arguments = new List<string>();
         private const int frameDoubleThickness = 2;
         private const char heightMarker = 'h';
         private const char speedMarker = 's';
@@ -12,98 +14,103 @@ namespace LifeGame
         private static int speed = 0;
         private static int width = 0;
 
-        private static bool CheckFormat(string[] lines)
+
+        private static void CheckFormat(string[] lines)
         {
-            bool isNumber = true;
-            foreach (string line in lines)
+            bool isCorrect = true;
+            foreach(string line in lines)
             {
-                switch (line[0])
+                if (line != "")
                 {
-                    case widthMarker:
-                        isNumber = int.TryParse(line.Remove(0, 1), out width);
-                        break;
-                    case heightMarker:
-                        isNumber = int.TryParse(line.Remove(0, 1), out height);
-                        break;
-                    case speedMarker:
-                        isNumber = int.TryParse(line.Remove(0, 1), out speed);
-                        break;
-                    //default:
-                    //    isNumber = false;
-                    //    break;
+                    switch (line[0])
+                    {
+                        case widthMarker:
+                            isCorrect = int.TryParse(line.Remove(0, 1), out width);
+                            break;
+                        case heightMarker:
+                            isCorrect = int.TryParse(line.Remove(0, 1), out height);
+                            break;
+                        case speedMarker:
+                            isCorrect = int.TryParse(line.Remove(0, 1), out speed);
+                            break;
+                        default:
+                            isCorrect = false;
+                            break;
+                    }
                 }
-                if (!isNumber)
+                else
                 {
-                    break;
+                    isCorrect = false;
+                }
+                if (isCorrect)
+                {
+                    arguments.Add(line);
                 }
             }
-            return isNumber;
         }
-        
-        public static void Main(string[] arguments)
+
+        public static void Main(string[] commandLineArguments)
         {
-            if (CheckFormat(arguments))
+            CheckFormat(commandLineArguments);
+            // сортировка по алфавиту
+            arguments.Sort(string.Compare);
+            Life lifeGame = null;
+            // инициализация игры разными конструкторами в зависимости от к-ва параметров
+            switch (arguments.Count)
             {
-                // сортировка по алфавиту
-                SortStrings(arguments);
-                Life lifeGame = null;
-                // инициализация игры разными конструкторами в зависимости от к-ва параметров
-                switch (arguments.Length)
-                {
-                    case 0:
-                        lifeGame = new Life();
-                        break;
-                    case 1:
-                        // прерывание с сообщением, если указанный параметр высота или ширина
-                        switch (arguments[0][0])
-                        {
-                            case speedMarker:
-                                lifeGame = new Life(speed);
-                                break;
-                            case heightMarker:
-                                ShowMessage("Width ");
-                                break;
-                            case widthMarker:
-                                ShowMessage("Height ");
-                                break;
-                        }
-                        break;
-                    case 2:
+                case 0:
+                    lifeGame = new Life();
+                    break;
+                case 1:
+                    // прерывание с сообщением, если указанный параметр высота или ширина
+                    switch (arguments[0][0])
+                    {
+                        case speedMarker:
+                            lifeGame = new Life(speed);
+                            break;
+                        case heightMarker:
+                            ShowMessage("Width ");
+                            break;
+                        case widthMarker:
+                            ShowMessage("Height ");
+                            break;
+                    }
+                    break;
+                case 2:
+                    if ((arguments[0][0] == heightMarker)
+                        && (arguments[1][0] == widthMarker))
+                    {
+                        lifeGame = new Life(height + frameDoubleThickness, width + frameDoubleThickness);
+                    }
+                    // прерывание с сообщением, если один из указанных параметров - скорость
+                    else
+                    {
                         if ((arguments[0][0] == heightMarker)
-                            && (arguments[1][0] == widthMarker))
+                            && (arguments[1][0] == speedMarker))
                         {
-                            lifeGame = new Life(height + frameDoubleThickness, width + frameDoubleThickness);
+                            ShowMessage("Width ");
+                            break;
                         }
-                        // прерывание с сообщением, если один из указанных параметров - скорость
                         else
                         {
-                            if ((arguments[0][0] == heightMarker)
-                                && (arguments[1][0] == speedMarker))
+                            if ((arguments[0][0] == speedMarker
+                                && arguments[1][0] == widthMarker))
                             {
-                                ShowMessage("Width ");
+                                ShowMessage("Height ");
                                 break;
                             }
-                            else
-                            {
-                                if ((arguments[0][0] == speedMarker
-                                    && arguments[1][0] == widthMarker))
-                                {
-                                    ShowMessage("Height ");
-                                    break;
-                                }
-                            }
                         }
-                        break;
-                    case 3:
-                        lifeGame = new Life(height + frameDoubleThickness, width + frameDoubleThickness, speed);
-                        break;
-                }
-                if (lifeGame != null)
-                {
-                    Life.ManualInput(lifeGame);
-                    lifeGame.Game();
-                    Console.ReadKey();
-                }
+                    }
+                    break;
+                case 3:
+                    lifeGame = new Life(height + frameDoubleThickness, width + frameDoubleThickness, speed);
+                    break;
+            }
+            if (lifeGame != null)
+            {
+                Life.ManualInput(lifeGame);
+                lifeGame.Game();
+                Console.ReadKey();
             }
         }
 
@@ -115,26 +122,6 @@ namespace LifeGame
             Console.WriteLine("{0} of the Universe was not specified.", line);
             Console.ResetColor();
             Console.ReadKey();
-        }
-
-        private static void SortStrings(string[] strings)
-        {
-            if (strings.Length > 1)
-            {
-                string buffer;
-                for (int i = 0; i < strings.Length - 1; i++)
-                {
-                    for (int j = i + 1; j < strings.Length; j++)
-                    {
-                        if (string.Compare(strings[i], strings[j]) > 0)
-                        {
-                            buffer = strings[i];
-                            strings[i] = strings[j];
-                            strings[j] = buffer;
-                        }
-                    }
-                }
-            }
         }
     }
 }
