@@ -14,28 +14,39 @@ namespace LifeGame
         private static int speed = 0;
         private static int width = 0;
 
-
         private static void CheckFormat(string[] lines)
         {
             bool isCorrect = true;
-            foreach(string line in lines)
+            // цикл запускается в обратную сторону, чтобы при проверке на повторы сохранилось первое вхождение высоты, ширины или скорости
+            for (int i = lines.Length - 1; i >= 0; i--)
             {
-                if (line != "")
+                if (lines[i] != "")
                 {
-                    switch (line[0])
+                    switch (lines[i][0])
                     {
                         case widthMarker:
-                            isCorrect = int.TryParse(line.Remove(0, 1), out width);
+                            isCorrect = int.TryParse(lines[i].Remove(0, 1), out width);
                             break;
                         case heightMarker:
-                            isCorrect = int.TryParse(line.Remove(0, 1), out height);
+                            isCorrect = int.TryParse(lines[i].Remove(0, 1), out height);
                             break;
                         case speedMarker:
-                            isCorrect = int.TryParse(line.Remove(0, 1), out speed);
+                            isCorrect = int.TryParse(lines[i].Remove(0, 1), out speed);
                             break;
                         default:
                             isCorrect = false;
                             break;
+                    }
+                    if (isCorrect)
+                    {
+                        for (int j = 0; j < lines.Length; j++)
+                        {
+                            if (lines[j] == lines[i] && (j < i))
+                            {
+                                isCorrect = false;
+                                break;
+                            }
+                        }
                     }
                 }
                 else
@@ -44,16 +55,15 @@ namespace LifeGame
                 }
                 if (isCorrect)
                 {
-                    arguments.Add(line);
+                    arguments.Add(lines[i]);
                 }
             }
+            arguments.Sort(string.Compare);
         }
 
         public static void Main(string[] commandLineArguments)
         {
             CheckFormat(commandLineArguments);
-            // сортировка по алфавиту
-            arguments.Sort(string.Compare);
             Life lifeGame = null;
             // инициализация игры разными конструкторами в зависимости от к-ва параметров
             switch (arguments.Count)
@@ -89,7 +99,6 @@ namespace LifeGame
                             && (arguments[1][0] == speedMarker))
                         {
                             ShowMessage("Width ");
-                            break;
                         }
                         else
                         {
@@ -97,7 +106,6 @@ namespace LifeGame
                                 && arguments[1][0] == widthMarker))
                             {
                                 ShowMessage("Height ");
-                                break;
                             }
                         }
                     }
